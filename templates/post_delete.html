@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form action="{% url 'post_delete' author post.id %}" method="post">
+    {% csrf_token %}
+    <p>{{ post.text|linebreaks }}</p>
+    <hr>
+    <p><strong>{{ post.author|title }}, Вы уверены, что хотите удалить
+        пост?</strong></p>
+    <button type="submit" class="btn btn-danger">Да</button>
+    <a class="btn btn-primary"
+       href="{% url 'post' author post.id %}">Нет</a>
+</form>
+{% endblock %}

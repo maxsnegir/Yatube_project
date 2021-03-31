@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<main role="main" class="container">
+    <div class="row">
+        {% include 'components/profile_card.html' %}
+        <div class="col-md-9">
+            {% for post in posts %}
+            {% include 'post_item.html' %}
+            {% endfor %}
+            {% include 'components/pagination.html' with items=posts paginator=paginator %}
+        </div>
+    </div>
+</main>
+{% endblock %}

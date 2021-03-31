@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load user_filters %}
+
+{% block header%}
+{% if edit %}
+Редактировать запись
+{% else %}
+Добавить новую запись
+{% endif %}
+{%endblock%}
+
+{% block content %}
+<form action="{% if edit %}
+              {% url 'post_edit' post.author post.id %}
+              {% else %}
+              {% url 'new_post' %}
+              {% endif %}"
+              method="post"
+              enctype="multipart/form-data">
+
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="form-group shadow p-3 mb-5 bg-white rounded">
+        <label>{{ field.label }}</label>
+        {% if field.name == 'image' %}
+        {{ field|addclass:"form-control-file" }}
+        {% else %}
+        {{ field|addclass:"form-control" }}
+        {% endif %}
+        {% if field.help_text %}
+        <small id="{{ field.id_for_label }}-help"
+               class="form-text text-muted">
+            {{ field.help_text|safe }}
+        </small>
+        {% endif %}
+    </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-dark">
+        {% if edit %}
+        Изменить запись
+        {% else %}
+        Добавить запись
+        {% endif %}
+    </button>
+    {% if edit %}
+    <a class="btn btn btn-danger"
+       href="{% url 'post_delete' post.author.username post.id %}"
+       role="button">Удалить запись</a>
+    {% endif %}
+</form>
+{% endblock %}

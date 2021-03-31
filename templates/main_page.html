@@ -1,0 +1,17 @@
+<div class="container">
+
+    {% if search_query %}
+        <h3 class="text-center">Записи по запросу "{{ search_query }}":</h3>
+    {% endif %}
+
+    {% for post in page %}
+        {% include "post_item.html" with post=post %}
+    {% empty %}
+        <h6 class="text-center mt-3">Записей не найдено</h6>
+        <a href="#" onclick="history.back();return false;">Вернуться назад</a>
+    {% endfor %}
+
+</div>
+{% if page.has_other_pages %}
+    {% include "components/pagination.html" with items=page paginator=paginator%}
+{% endif %}

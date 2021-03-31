@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}Последние обновления{% endblock %}
+{% block header %}Последние обновления ваших подписок{% endblock %}
+{% block content %}
+
+{% include "components/menu.html" with follow=True %}
+{% include "main_page.html" %}
+
+{% endblock %}

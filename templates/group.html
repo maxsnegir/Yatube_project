@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Записи сообщества {{ group.title }}{% endblock %}
+{% block header %}
+    <h1>Последние записи группы: {{ group.title }}</h1>
+    <p>{{ group.description|linebreaksbr }}</p>
+{% endblock %}
+
+{% block content %}
+    {% include "components/menu.html" with group_page=True %}
+    {% include 'main_page.html' %}
+{% endblock %}

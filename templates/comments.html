@@ -1,0 +1,56 @@
+{% load user_filters %}
+
+{% if user.is_authenticated %}
+<div class="card my-4">
+    <form method="post"
+          action="{% if edit %}
+                  {% url 'edit_comment' post.author post.id comment.id %}
+                  {% else %}
+                  {% url 'add_comment' post.author post.id %}
+                  {% endif %}">
+        {% csrf_token %}
+        <h5 class="card-header">Добавить комментарий:</h5>
+        <div class="card-body">
+            <div class="form-group">
+                {{ form.text|addclass:'form-control form-control-sm' }}
+            </div>
+            <button type="submit" class="btn btn-primary">Отправить</button>
+        </div>
+    </form>
+</div>
+{% endif %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-success" role="alert">
+{{ message|safe }}
+</div>
+{% endfor %}
+{% endif %}
+
+<h5>Комментарии</h5>
+<small class="text-muted">Всего комментариев: {{ post.comments.count }}</small>
+{% for item in comments %}
+<div class="media card mb-4">
+    <div class="media-body card-body">
+        <h5 class="mt-0">
+            <a href="{% url 'profile' item.author.username %}"
+               name="comment_{{ item.id }}">
+                {{ item.author.username }}
+            </a>
+            <small style='font-size: 12px' class="text-muted">{{ item.created|date:'SHORT_DATE_FORMAT' }}</small>
+        </h5>
+
+        <p>{{ item.text | linebreaksbr }}</p>
+        {% if request.user == item.author %}
+        <div class="btn-group">
+            <a class="btn btn-primary btn-sm" role='button'
+               href="{% url 'edit_comment' post.author post.id item.id %}">Изменить</a>
+            <a class="btn btn-danger btn-sm" role='button'
+               href="{% url 'delete_comment' post.author post.id item.id %}">Удалить</a>
+        </div>
+
+        {% endif %}
+
+    </div>
+</div>
+{% endfor %} 
