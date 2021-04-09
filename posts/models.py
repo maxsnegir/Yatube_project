@@ -62,3 +62,4 @@ class Follow(models.Model):
             models.UniqueConstraint(fields=['user', 'author'],
                                     name='unique_followers'),
         ]
+
