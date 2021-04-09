@@ -66,7 +66,7 @@ docker-compose exec web python manage.py collectstatic --no-input
 ```bash
 docker-compose exec web python manage.py loaddata fixtures.json
 ```
-_Проект запущен и доступен по адресу http://127.0.0.1_
+5. Проект запущен и доступен по адресу http://127.0.0.1
 ### Автор
 
 [Максим Снегирёв](https://t.me/maxsneg)
